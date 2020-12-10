@@ -32,19 +32,33 @@ boost
             {
             template <class A,class B,
                 bool QA=is_quat<A>::value,
-                bool QB=is_quat<B>::value>
+                bool QB=is_quat<B>::value,
+                class SA=typename scalar<A>::type,
+                class SB=typename scalar<B>::type,
+                class SR=typename deduce_scalar<typename scalar<A>::type,typename scalar<B>::type>::type>
             struct
-            deduce_quat2_default
+            deduce_q2_default
                 {
-                typedef quat<
-                    typename deduce_scalar<
-                        typename scalar<A>::type,
-                        typename scalar<B>::type>::type> type;
+                typedef quat<SR> type;
                 };
 
-            template <class Q>
+            template <class Q,class S>
             struct
-            deduce_quat2_default<Q,Q,true,true>
+            deduce_q2_default<Q,Q,true,true,S,S,S>
+                {
+                typedef Q type;
+                };
+
+            template <class Q,class S,class SV>
+            struct
+            deduce_q2_default<Q,S,true,false,SV,S,SV>
+                {
+                typedef Q type;
+                };
+
+            template <class S,class Q,class SV>
+            struct
+            deduce_q2_default<S,Q,false,true,S,SV,SV>
                 {
                 typedef Q type;
                 };
@@ -55,7 +69,7 @@ boost
         deduce_quat2
             {
             BOOST_QVM_STATIC_ASSERT(is_quat<A>::value || is_quat<B>::value);
-            typedef typename qvm_detail::deduce_quat2_default<A,B>::type type;
+            typedef typename qvm_detail::deduce_q2_default<A,B>::type type;
             };
         }
     }

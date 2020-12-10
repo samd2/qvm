@@ -384,10 +384,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_quat<A>::value && is_scalar<B>::value,
-            deduce_quat<A> >::type
+            deduce_quat2<A,B> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_quat<A>::type R;
+            typedef typename deduce_quat2<A,B>::type R;
             R r;
             quat_traits<R>::template write_element<0>(r) = quat_traits<A>::template read_element<0>(a)/b;
             quat_traits<R>::template write_element<1>(r) = quat_traits<A>::template read_element<1>(a)/b;
@@ -601,10 +601,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_quat<A>::value && is_scalar<B>::value,
-            deduce_quat<A> >::type
+            deduce_quat2<A,B> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_quat<A>::type R;
+            typedef typename deduce_quat2<A,B>::type R;
             R r;
             quat_traits<R>::template write_element<0>(r)=quat_traits<A>::template read_element<0>(a)*b;
             quat_traits<R>::template write_element<1>(r)=quat_traits<A>::template read_element<1>(a)*b;
@@ -801,6 +801,20 @@ boost
         deduce_quat< qvm_detail::qref_<Q> >
             {
             typedef quat<typename quat_traits<Q>::scalar_type> type;
+            };
+
+        template <class Q,class B>
+        struct
+        deduce_quat2<qvm_detail::qref_<Q>,B>
+            {
+            typedef quat<typename deduce_scalar<typename quat_traits<Q>::scalar_type,typename scalar<B>::type>::type> type;
+            };
+
+        template <class A,class Q>
+        struct
+        deduce_quat2<A,qvm_detail::qref_<Q> >
+            {
+            typedef quat<typename deduce_scalar<typename scalar<A>::type,typename quat_traits<Q>::scalar_type>::type> type;
             };
 
         template <class Q>

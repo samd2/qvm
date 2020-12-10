@@ -122,6 +122,20 @@ boost
             {
             typedef mat<typename mat_traits<OriginalMatrix>::scalar_type,R,C> type;
             };
+
+        template <class OriginalMatrix,class B,int R,int C>
+        struct
+        deduce_mat2<qvm_detail::transposed_<OriginalMatrix>,B,R,C>
+            {
+            typedef mat<typename deduce_scalar<typename mat_traits<OriginalMatrix>::scalar_type,typename scalar<B>::type>::type,R,C> type;
+            };
+
+        template <class A,class OriginalMatrix,int R,int C>
+        struct
+        deduce_mat2<A,qvm_detail::transposed_<OriginalMatrix>,R,C>
+            {
+            typedef mat<typename deduce_scalar<typename scalar<A>::type,typename mat_traits<OriginalMatrix>::scalar_type>::type,R,C> type;
+            };
         }
     }
 

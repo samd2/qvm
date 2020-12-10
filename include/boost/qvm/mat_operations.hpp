@@ -494,10 +494,10 @@ boost
         typename lazy_enable_if_c<
             is_mat<A>::value && is_scalar<B>::value &&
             !qvm_detail::div_ms_defined<mat_traits<A>::rows,mat_traits<A>::cols>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,mat_traits<A>::rows,mat_traits<A>::cols> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,mat_traits<A>::rows,mat_traits<A>::cols>::type R;
             R r;
             for( int i=0; i!=mat_traits<A>::rows; ++i )
                 for( int j=0; j!=mat_traits<A>::cols; ++j )
@@ -746,10 +746,10 @@ boost
         typename lazy_enable_if_c<
             is_mat<A>::value && is_scalar<B>::value &&
             !qvm_detail::mul_ms_defined<mat_traits<A>::rows,mat_traits<A>::cols>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,mat_traits<A>::rows,mat_traits<A>::cols> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,mat_traits<A>::rows,mat_traits<A>::cols>::type R;
             R r;
             for( int i=0; i!=mat_traits<A>::rows; ++i )
                 for( int j=0; j!=mat_traits<A>::cols; ++j )
@@ -775,10 +775,10 @@ boost
         typename lazy_enable_if_c<
             is_scalar<A>::value && is_mat<B>::value &&
             !qvm_detail::mul_sm_defined<mat_traits<B>::rows,mat_traits<B>::cols>::value,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,mat_traits<B>::rows,mat_traits<B>::cols> >::type
         operator*( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,mat_traits<B>::rows,mat_traits<B>::cols>::type R;
             R r;
             for( int i=0; i!=mat_traits<B>::rows; ++i )
                 for( int j=0; j!=mat_traits<B>::cols; ++j )
@@ -976,6 +976,20 @@ boost
         deduce_mat<qvm_detail::mref_<M>,R,C>
             {
             typedef mat<typename mat_traits<M>::scalar_type,R,C> type;
+            };
+
+        template <class M,class B,int R,int C>
+        struct
+        deduce_mat2<qvm_detail::mref_<M>,B,R,C>
+            {
+            typedef mat<typename deduce_scalar<typename mat_traits<M>::scalar_type,typename scalar<B>::type>::type,R,C> type;
+            };
+
+        template <class A,class M,int R,int C>
+        struct
+        deduce_mat2<A,qvm_detail::mref_<M>,R,C>
+            {
+            typedef mat<typename deduce_scalar<typename scalar<A>::type,typename mat_traits<M>::scalar_type>::type,R,C> type;
             };
 
         template <class M>
@@ -2396,7 +2410,7 @@ boost
             is_mat<A>::value && is_scalar<B>::value &&
             mat_traits<A>::rows==mat_traits<A>::cols &&
             !qvm_detail::inverse_m_defined<mat_traits<A>::rows>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,mat_traits<A>::rows,mat_traits<A>::cols> >::type
         inverse( A const & a, B det )
             {
             typedef typename mat_traits<A>::scalar_type T;

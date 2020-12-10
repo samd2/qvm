@@ -469,7 +469,7 @@ namespace
             TAB2 "BOOST_QVM_INLINE_OPERATIONS" NL
             TAB2 "typename lazy_enable_if_c<" NL
             TAB3 "mat_traits<A>::rows=="<<r<<" && mat_traits<A>::cols=="<<c<<" && is_scalar<B>::value," NL
-            TAB3 "deduce_mat<A> >::type" NL
+            TAB3 "deduce_mat2<A,B,"<<r<<','<<c<<"> >::type" NL
             TAB2<<name<<"( A const & a, B b )" NL
             ;
         }
@@ -486,7 +486,7 @@ namespace
             TAB2 "BOOST_QVM_INLINE_OPERATIONS" NL
             TAB2 "typename lazy_enable_if_c<" NL
             TAB3 "is_scalar<A>::value && mat_traits<B>::rows=="<<r<<" && mat_traits<B>::cols=="<<c<<"," NL
-            TAB3 "deduce_mat<B> >::type" NL
+            TAB3 "deduce_mat2<A,B,"<<r<<','<<c<<"> >::type" NL
             TAB2<<name<<"( A a, B const & b )" NL
             ;
         }
@@ -502,7 +502,7 @@ namespace
             TAB2 "BOOST_QVM_INLINE_OPERATIONS" NL
             TAB2 "typename lazy_enable_if_c<" NL
             TAB3 "vec_traits<A>::dim=="<<d<<" && is_scalar<B>::value," NL
-            TAB3 "deduce_vec<A> >::type" NL
+            TAB3 "deduce_vec2<A,B,"<<d<<"> >::type" NL
             TAB2<<name<<"( A const & a, B b )" NL
             ;
         }
@@ -518,7 +518,7 @@ namespace
             TAB2 "BOOST_QVM_INLINE_OPERATIONS" NL
             TAB2 "typename lazy_enable_if_c<" NL
             TAB3 "is_scalar<A>::value && vec_traits<B>::dim=="<<d<<"," NL
-            TAB3 "deduce_vec<B> >::type" NL
+            TAB3 "deduce_vec2<A,B,"<<d<<"> >::type" NL
             TAB2<<name<<"( A a, B const & b )" NL
             ;
         }
@@ -1036,7 +1036,7 @@ namespace
         std::ostream & g=out.stream();
         g<<
             TAB3 "{" NL
-            TAB3 "typedef typename deduce_mat<A>::type R;" NL
+            TAB3 "typedef typename deduce_mat2<A,B,"<<r<<','<<c<<">::type R;" NL
             TAB3 "R r;" NL
             ;
         for( int i=0; i!=r; ++i )
@@ -1059,7 +1059,7 @@ namespace
         std::ostream & g=out.stream();
         g<<
             TAB3 "{" NL
-            TAB3 "typedef typename deduce_mat<B>::type R;" NL
+            TAB3 "typedef typename deduce_mat2<A,B,"<<r<<','<<c<<">::type R;" NL
             TAB3 "R r;" NL
             ;
         for( int i=0; i!=r; ++i )
@@ -1081,7 +1081,7 @@ namespace
         std::ostream & g=out.stream();
         g<<
             TAB3 "{" NL
-            TAB3 "typedef typename deduce_vec<A>::type R;" NL
+            TAB3 "typedef typename deduce_vec2<A,B,"<<d<<">::type R;" NL
             TAB3 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
@@ -1102,7 +1102,7 @@ namespace
         std::ostream & g=out.stream();
         g<<
             TAB3 "{" NL
-            TAB3 "typedef typename deduce_vec<B>::type R;" NL
+            TAB3 "typedef typename deduce_vec2<A,B,"<<d<<">::type R;" NL
             TAB3 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
@@ -1385,7 +1385,7 @@ namespace
             TAB2 "BOOST_QVM_INLINE_OPERATIONS" NL
             TAB2 "typename lazy_enable_if_c<" NL
             TAB3 "mat_traits<A>::rows=="<<d<<" && mat_traits<A>::cols=="<<d<<" && is_scalar<B>::value," NL
-            TAB3 "deduce_mat<A> >::type" NL
+            TAB3 "deduce_mat2<A,B,"<<d<<','<<d<<"> >::type" NL
             TAB2 "inverse( A const & a, B det )" NL
             TAB3 "{" NL
             TAB3 "typedef typename mat_traits<A>::scalar_type T;" NL
@@ -1396,7 +1396,7 @@ namespace
                 g<<TAB3 "T const a"<<i<<j<<"=mat_traits<A>::template read_element<"<<i<<','<<j<<">(a);" NL;
         g<<
             TAB3 "T const f=scalar_traits<T>::value(1)/det;" NL
-            TAB3 "typedef typename deduce_mat<A>::type R;" NL
+            TAB3 "typedef typename deduce_mat2<A,B,"<<d<<','<<d<<">::type R;" NL
             TAB3 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
@@ -1739,7 +1739,7 @@ namespace
                 if( ++i==argc )
                     BOOST_THROW_EXCEPTION(bad_command_line() << cmd_arg(argv[i-1]));
                 return argv[i];
-                }                        
+                }
             } next_token(argc,argv);
         command_line_options r;
         for( int i=1; i!=argc; ++i )

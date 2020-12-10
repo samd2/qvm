@@ -52,7 +52,7 @@ boost
         namespace
         qvm_detail
             {
-            template <class A,bool M=is_mat<A>::value,bool Q=is_quat<A>::value,bool V=is_vec<A>::value>
+            template <class A,bool M=is_mat<A>::value,bool Q=is_quat<A>::value,bool V=is_vec<A>::value,bool S=is_scalar<A>::value>
             struct
             scalar_impl
                 {
@@ -60,23 +60,30 @@ boost
 
             template <class A>
             struct
-            scalar_impl<A,true,false,false>
+            scalar_impl<A,true,false,false,false>
                 {
                 typedef typename mat_traits<A>::scalar_type type;
                 };
 
             template <class A>
             struct
-            scalar_impl<A,false,true,false>
+            scalar_impl<A,false,true,false,false>
                 {
                 typedef typename quat_traits<A>::scalar_type type;
                 };
 
             template <class A>
             struct
-            scalar_impl<A,false,false,true>
+            scalar_impl<A,false,false,true,false>
                 {
                 typedef typename vec_traits<A>::scalar_type type;
+                };
+
+            template <class S>
+            struct
+            scalar_impl<S,false,false,false,true>
+                {
+                typedef S type;
                 };
             }
 

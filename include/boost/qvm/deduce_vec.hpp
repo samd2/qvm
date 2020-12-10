@@ -52,21 +52,32 @@ boost
             template <class A,class B,int D,
                 bool VA=is_vec<A>::value,
                 bool VB=is_vec<B>::value,
-                int AD=vec_traits<A>::dim,
-                int BD=vec_traits<B>::dim>
+                class SA=typename scalar<A>::type,
+                class SB=typename scalar<B>::type,
+                class SR=typename deduce_scalar<typename scalar<A>::type,typename scalar<B>::type>::type>
             struct
             deduce_v2_default
                 {
-                typedef vec<
-                    typename deduce_scalar<
-                        typename scalar<A>::type,
-                        typename scalar<B>::type>::type,
-                    D> type;
+                typedef vec<SR, D> type;
                 };
 
-            template <class V,int D>
+            template <class V,int D,class S>
             struct
-            deduce_v2_default<V,V,D,true,true,D,D>
+            deduce_v2_default<V,V,D,true,true,S,S,S>
+                {
+                typedef V type;
+                };
+
+            template <class V,class S,int D,class SV>
+            struct
+            deduce_v2_default<V,S,D,true,false,SV,S,SV>
+                {
+                typedef V type;
+                };
+
+            template <class S,class V,int D,class SV>
+            struct
+            deduce_v2_default<S,V,D,false,true,S,SV,SV>
                 {
                 typedef V type;
                 };

@@ -453,10 +453,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==2 && mat_traits<A>::cols==2 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,2,2> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,2,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)*b;
             mat_traits<R>::template write_element<0,1>(r)=mat_traits<A>::template read_element<0,1>(a)*b;
@@ -489,10 +489,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_scalar<A>::value && mat_traits<B>::rows==2 && mat_traits<B>::cols==2,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,2,2> >::type
         operator*( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,2,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=a*mat_traits<B>::template read_element<0,0>(b);
             mat_traits<R>::template write_element<0,1>(r)=a*mat_traits<B>::template read_element<0,1>(b);
@@ -525,10 +525,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==2 && mat_traits<A>::cols==1 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,2,1> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,2,1>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)*b;
             mat_traits<R>::template write_element<1,0>(r)=mat_traits<A>::template read_element<1,0>(a)*b;
@@ -559,10 +559,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_scalar<A>::value && mat_traits<B>::rows==2 && mat_traits<B>::cols==1,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,2,1> >::type
         operator*( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,2,1>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=a*mat_traits<B>::template read_element<0,0>(b);
             mat_traits<R>::template write_element<1,0>(r)=a*mat_traits<B>::template read_element<1,0>(b);
@@ -593,10 +593,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==1 && mat_traits<A>::cols==2 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,1,2> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,1,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)*b;
             mat_traits<R>::template write_element<0,1>(r)=mat_traits<A>::template read_element<0,1>(a)*b;
@@ -627,10 +627,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_scalar<A>::value && mat_traits<B>::rows==1 && mat_traits<B>::cols==2,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,1,2> >::type
         operator*( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,1,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=a*mat_traits<B>::template read_element<0,0>(b);
             mat_traits<R>::template write_element<0,1>(r)=a*mat_traits<B>::template read_element<0,1>(b);
@@ -759,10 +759,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==2 && mat_traits<A>::cols==2 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,2,2> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,2,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)/b;
             mat_traits<R>::template write_element<0,1>(r)=mat_traits<A>::template read_element<0,1>(a)/b;
@@ -795,10 +795,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_scalar<A>::value && mat_traits<B>::rows==2 && mat_traits<B>::cols==2,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,2,2> >::type
         operator/( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,2,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=a/mat_traits<B>::template read_element<0,0>(b);
             mat_traits<R>::template write_element<0,1>(r)=a/mat_traits<B>::template read_element<0,1>(b);
@@ -831,10 +831,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==2 && mat_traits<A>::cols==1 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,2,1> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,2,1>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)/b;
             mat_traits<R>::template write_element<1,0>(r)=mat_traits<A>::template read_element<1,0>(a)/b;
@@ -865,10 +865,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             is_scalar<A>::value && mat_traits<B>::rows==2 && mat_traits<B>::cols==1,
-            deduce_mat<B> >::type
+            deduce_mat2<A,B,2,1> >::type
         operator/( A a, B const & b )
             {
-            typedef typename deduce_mat<B>::type R;
+            typedef typename deduce_mat2<A,B,2,1>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=a/mat_traits<B>::template read_element<0,0>(b);
             mat_traits<R>::template write_element<1,0>(r)=a/mat_traits<B>::template read_element<1,0>(b);
@@ -899,10 +899,10 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==1 && mat_traits<A>::cols==2 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,1,2> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,1,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)=mat_traits<A>::template read_element<0,0>(a)/b;
             mat_traits<R>::template write_element<0,1>(r)=mat_traits<A>::template read_element<0,1>(a)/b;
@@ -1477,7 +1477,7 @@ boost
         BOOST_QVM_INLINE_OPERATIONS
         typename lazy_enable_if_c<
             mat_traits<A>::rows==2 && mat_traits<A>::cols==2 && is_scalar<B>::value,
-            deduce_mat<A> >::type
+            deduce_mat2<A,B,2,2> >::type
         inverse( A const & a, B det )
             {
             typedef typename mat_traits<A>::scalar_type T;
@@ -1487,7 +1487,7 @@ boost
             T const a10=mat_traits<A>::template read_element<1,0>(a);
             T const a11=mat_traits<A>::template read_element<1,1>(a);
             T const f=scalar_traits<T>::value(1)/det;
-            typedef typename deduce_mat<A>::type R;
+            typedef typename deduce_mat2<A,B,2,2>::type R;
             R r;
             mat_traits<R>::template write_element<0,0>(r)= f*a11;
             mat_traits<R>::template write_element<0,1>(r)=-f*a01;

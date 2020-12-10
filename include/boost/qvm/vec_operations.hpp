@@ -371,10 +371,10 @@ boost
         typename lazy_enable_if_c<
             is_vec<A>::value && is_scalar<B>::value &&
             !qvm_detail::div_vs_defined<vec_traits<A>::dim>::value,
-            deduce_vec<A> >::type
+            deduce_vec2<A,B,vec_traits<A>::dim> >::type
         operator/( A const & a, B b )
             {
-            typedef typename deduce_vec<A>::type R;
+            typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
             R r;
             for( int i=0; i!=vec_traits<A>::dim; ++i )
                 vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)/b;
@@ -628,10 +628,10 @@ boost
         typename lazy_enable_if_c<
             is_vec<A>::value && is_scalar<B>::value &&
             !qvm_detail::mul_vs_defined<vec_traits<A>::dim>::value,
-            deduce_vec<A> >::type
+            deduce_vec2<A,B,vec_traits<A>::dim> >::type
         operator*( A const & a, B b )
             {
-            typedef typename deduce_vec<A>::type R;
+            typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
             R r;
             for( int i=0; i!=vec_traits<A>::dim; ++i )
                 vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)*b;
@@ -656,10 +656,10 @@ boost
         typename lazy_enable_if_c<
             is_scalar<A>::value && is_vec<B>::value &&
             !qvm_detail::mul_sv_defined<vec_traits<B>::dim>::value,
-            deduce_vec<B> >::type
+            deduce_vec2<A,B,vec_traits<B>::dim> >::type
         operator*( A a, B const & b )
             {
-            typedef typename deduce_vec<B>::type R;
+            typedef typename deduce_vec2<A,B,vec_traits<B>::dim>::type R;
             R r;
             for( int i=0; i!=vec_traits<B>::dim; ++i )
                 vec_traits<R>::write_element_idx(i,r)=a*vec_traits<B>::read_element_idx(i,b);
@@ -901,6 +901,20 @@ boost
         deduce_vec<qvm_detail::vref_<V>,D>
             {
             typedef vec<typename vec_traits<V>::scalar_type,D> type;
+            };
+
+        template <class V,class B,int D>
+        struct
+        deduce_vec2<qvm_detail::vref_<V>,B,D>
+            {
+            typedef vec<typename deduce_scalar<typename vec_traits<V>::scalar_type,typename scalar<B>::type>::type,D> type;
+            };
+
+        template <class A,class V,int D>
+        struct
+        deduce_vec2<A,qvm_detail::vref_<V>,D>
+            {
+            typedef vec<typename deduce_scalar<typename scalar<A>::type,typename vec_traits<V>::scalar_type>::type,D> type;
             };
 
         template <class V>

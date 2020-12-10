@@ -55,23 +55,32 @@ boost
             template <class A,class B,int R,int C,
                 bool VA=is_mat<A>::value,
                 bool VB=is_mat<B>::value,
-                int AR=mat_traits<A>::rows,
-                int AC=mat_traits<A>::cols,
-                int BR=mat_traits<B>::rows,
-                int BC=mat_traits<B>::cols>
+                class SA=typename scalar<A>::type,
+                class SB=typename scalar<B>::type,
+                class SR=typename deduce_scalar<typename scalar<A>::type,typename scalar<B>::type>::type>
             struct
             deduce_m2_default
                 {
-                typedef mat<
-                    typename deduce_scalar<
-                        typename scalar<A>::type,
-                        typename scalar<B>::type>::type,
-                    R,C> type;
+                typedef mat<SR,R,C> type;
                 };
 
-            template <class M,int R,int C>
+            template <class M,int R,int C,class S>
             struct
-            deduce_m2_default<M,M,R,C,true,true,R,C,R,C>
+            deduce_m2_default<M,M,R,C,true,true,S,S,S>
+                {
+                typedef M type;
+                };
+
+            template <class M,class S,int R,int C,class SV>
+            struct
+            deduce_m2_default<M,S,R,C,true,false,SV,S,SV>
+                {
+                typedef M type;
+                };
+
+            template <class S,class M,int R,int C,class SV>
+            struct
+            deduce_m2_default<S,M,R,C,false,true,S,SV,SV>
                 {
                 typedef M type;
                 };
