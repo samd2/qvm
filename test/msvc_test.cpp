@@ -448,16 +448,127 @@ boost
     }
 
 
+namespace
+test_qvm
+    {
+    template <class Tag,class T=float>
+    struct
+    quaternion
+        {
+        T a[4];
+        mutable T b[4];
+
+        explicit
+        quaternion( T start=T(0), T step=T(0) )
+            {
+            for( int i=0; i!=4; ++i,start+=step )
+                a[i]=b[i]=start;
+            }
+        };
+
+    template <class Tag1,class T1,class Tag2,class T2>
+    void
+    dump_ab( quaternion<Tag1,T1> const & a, quaternion<Tag2,T2> const & b )
+        {
+        detail::dump_ab(a.a,b.a);
+        }
+    }
+
+
+namespace
+boost
+    {
+    namespace
+    qvm
+        {
+        template <class>
+        struct quat_traits;
+
+        template <class QuatType,class ScalarType>
+        struct
+        quat_traits_defaults
+            {
+            typedef QuatType quat_type;
+            typedef ScalarType scalar_type;
+
+            template <int I>
+            static
+            scalar_type
+            read_element( quat_type const & x )
+                {
+                return quat_traits<quat_type>::template write_element<I>(const_cast<quat_type &>(x));
+                }
+            };
+        }
+    }
+
+
+namespace
+boost
+    {
+    namespace
+    qvm
+        {
+        template <class Tag,class T>
+        struct
+        quat_traits< test_qvm::quaternion<Tag,T> >:
+            quat_traits_defaults<test_qvm::quaternion<Tag,T>,T>
+            {
+            typedef quat_traits_defaults<test_qvm::quaternion<Tag,T>,T> base;
+
+            template <int I>
+            static
+            typename base::scalar_type &
+            write_element( typename base::quat_type & m )
+                {
+                return m.a[I];
+                }
+            };
+
+        template <class Tag,class T>
+        struct
+        deduce_quat2<test_qvm::quaternion<Tag,T>,test_qvm::quaternion<Tag,T> >
+            {
+            typedef test_qvm::quaternion<Tag,T> type;
+            };
+        }
+    }
+
+
+namespace
+boost
+    {
+    namespace
+    qvm
+        {
+        namespace
+        sfinae
+            {
+            using boost::qvm::operator*;
+            }
+        }
+    }
+
+
+namespace
+    {
+    struct Q1;
+    struct Q2;
+    struct Q3;
+    }
+
+
 
 template <class T,class U> struct same_type_tester;
 template <class T> struct same_type_tester<T,T> { };
 template <class T,class U> void test_same_type( T, U ) { same_type_tester<T,U>(); }
 
-using namespace boost::qvm;
 
 int main()
 {
-    quat<float> q;
-    test_same_type(q, q*2);
+    using namespace boost::qvm::sfinae;
+    test_qvm::quaternion<Q1> const x(42,1);
+    test_same_type(x,x*2);
+    test_qvm::quaternion<Q1> y=x*2;
     return 0;
 }
