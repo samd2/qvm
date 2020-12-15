@@ -67,6 +67,58 @@ namespace boost { namespace qvm {
   template <class Cond, class T>
   struct lazy_disable_if : public lazy_disable_if_c<Cond::value, T> {};
 
+////////////////////////////////////////////////
+
+  template<typename T, typename R=void>
+  struct enable_if_has_type2
+  {
+    typedef R type;
+  };
+
+  template <bool B, class T = void>
+  struct enable_if_c2 {
+    typedef T type;
+  };
+
+  template <class T>
+  struct enable_if_c2<false, T> {};
+
+  template <class Cond, class T = void>
+  struct enable_if2 : public enable_if_c2<Cond::value, T> {};
+
+  template <bool B, class T>
+  struct lazy_enable_if_c2 {
+    typedef typename T::type type;
+  };
+
+  template <class T>
+  struct lazy_enable_if_c2<false, T> {};
+
+  template <class Cond, class T>
+  struct lazy_enable_if2 : public lazy_enable_if_c2<Cond::value, T> {};
+
+
+  template <bool B, class T = void>
+  struct disable_if_c2 {
+    typedef T type;
+  };
+
+  template <class T>
+  struct disable_if_c2<true, T> {};
+
+  template <class Cond, class T = void>
+  struct disable_if2 : public disable_if_c2<Cond::value, T> {};
+
+  template <bool B, class T>
+  struct lazy_disable_if_c2 {
+    typedef typename T::type type;
+  };
+
+  template <class T>
+  struct lazy_disable_if_c2<true, T> {};
+
+  template <class Cond, class T>
+  struct lazy_disable_if2 : public lazy_disable_if_c2<Cond::value, T> {};
 } }
 
 #endif

@@ -595,7 +595,7 @@ operator*( A const & a, B const & b )
 
 template <class A,class B>
 BOOST_QVM_INLINE_OPERATIONS
-typename lazy_enable_if_c<
+typename lazy_enable_if_c2<
     is_quat<A>::value && is_scalar<B>::value,
     deduce_quat2<A,B> >::type
 operator*( A const & a, B b )
