@@ -3,9 +3,14 @@
 //Distributed under the Boost Software License, Version 1.0. (See accompanying
 //file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/qvm/vec_traits.hpp>
-#include <boost/qvm/swizzle4.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#ifdef BOOST_QVM_TEST_SINGLE_HEADER
+#   include <boost/qvm.hpp>
+#else
+#   include <boost/qvm/vec_traits.hpp>
+#   include <boost/qvm/swizzle4.hpp>
+#endif
+
+#include <boost/core/lightweight_test.hpp>
 
 template <int D> struct my_vec { };
 int called=0;

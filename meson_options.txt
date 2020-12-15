@@ -1,0 +1,2 @@
+option('qvm_hpp',type:'boolean',value:false,description:'Unit tests #include <boost/qvm.hpp> instead of individual headers')
+option('qvm_enable_unit_tests',type:'boolean',value:true,description:'Enable the building of unit test programs')
