@@ -34,7 +34,7 @@ jobs:
       - name: Asciidoctor
         run: |
           echo "using asciidoctor ;" > ~/user-config.jam
-        - ../../b2 doc
+          ../../b2 doc
 
       - name: Deploy to GitHub Pages
       - name: Deploy
