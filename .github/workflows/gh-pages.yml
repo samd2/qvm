@@ -25,6 +25,8 @@ jobs:
           git clone --depth 1 https://github.com/boostorg/boost.git boost-root
           cd boost-root
           cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
+          git submodule update --init tools/build
+          git submodule update --init libs/config
           ./bootstrap.sh
 
       - name: Create user-config.jam
