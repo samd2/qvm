@@ -5,9 +5,6 @@ on:
     branches:
       - feature/github_ci_doc
 
-env:
-  LIBRARY: qvm
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -24,7 +21,7 @@ jobs:
           cd ..
           git clone --depth 1 https://github.com/boostorg/boost.git boost-root
           cd boost-root
-          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
+          cp -r $GITHUB_WORKSPACE/* libs/qvm
           git submodule update --init tools/build
           git submodule update --init libs/config
           ./bootstrap.sh
@@ -35,7 +32,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          cd ../boost-root/libs/$LIBRARY/doc
+          cd ../boost-root/libs/qvm/doc
           ../../../b2
 
       - name: Deploy to GitHub Pages
@@ -43,4 +40,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: ../boost-root/libs/$LIBRARY/doc/html
+          FOLDER: ../boost-root/libs/qvm/doc/html
