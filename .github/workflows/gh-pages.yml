@@ -35,8 +35,8 @@ jobs:
 
       - name: Build documentation
         run: |
-          cd ../boost-root
-          ./b2 libs/$LIBRARY/doc
+          cd ../boost-root/libs/$LIBRARY/doc
+          ../../../b2
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
