@@ -1,0 +1,45 @@
+name: documentation
+
+on:
+  push:
+    branches:
+      - feature/github_ci_doc
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install packages
+        run: |
+          sudo apt install ruby-full
+          gem install asciidoctor
+          gem install asciidoctor-pdf --pre
+          gem install rouge
+
+      - name: Setup Boost
+        run: |
+          cd ..
+          git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
+          cd boost-root
+          git submodule update --init tools/build
+          git submodule update --init libs/config
+          rm -rf libs/qvm
+          mkdir libs/qvm
+          cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
+          ./bootstrap.sh
+          cd libs/qvm
+
+      - name: Asciidoctor
+        run: |
+          echo "using asciidoctor ;" > ~/user-config.jam
+        - ../../b2 doc
+
+      - name: Deploy to GitHub Pages
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: html
