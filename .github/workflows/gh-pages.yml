@@ -13,7 +13,6 @@ jobs:
 
       - name: Install packages
         run: |
-          sudo apt install ruby-full
           gem install asciidoctor
           gem install asciidoctor-pdf --pre
           gem install rouge
