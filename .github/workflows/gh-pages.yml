@@ -5,6 +5,9 @@ on:
     branches:
       - feature/github_ci_doc
 
+env:
+  LIBRARY: qvm
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -17,26 +20,25 @@ jobs:
 
       - name: Setup Boost
         run: |
+          REF=${GITHUB_BASE_REF:-$GITHUB_REF}
           cd ..
-          git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
+          git clone --depth 1 https://github.com/boostorg/boost.git boost-root
           cd boost-root
-          git submodule update --init tools/build
-          git submodule update --init libs/config
-          rm -rf libs/qvm
-          mkdir libs/qvm
           cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
           ./bootstrap.sh
-          cd libs/qvm
 
-      - name: Asciidoctor
+      - name: Create user-config.jam
         run: |
           echo "using asciidoctor ;" > ~/user-config.jam
-          cd ../boost-root/libs/qvm
-          ../../b2 doc
+
+      - name: Build documentation
+        run: |
+          cd ../boost-root
+          ./b2 libs/$LIBRARY/doc
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: html
+          FOLDER: ../boost-root/libs/$LIBRARY/html
