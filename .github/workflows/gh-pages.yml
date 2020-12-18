@@ -37,7 +37,6 @@ jobs:
           ../../b2 doc
 
       - name: Deploy to GitHub Pages
-      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
