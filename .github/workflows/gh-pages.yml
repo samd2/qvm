@@ -13,9 +13,7 @@ jobs:
 
       - name: Install packages
         run: |
-          gem install asciidoctor
-          gem install asciidoctor-pdf --pre
-          gem install rouge
+          sudo gem install asciidoctor asciidoctor-pdf rouge
 
       - name: Setup Boost
         run: |
