@@ -185,8 +185,14 @@ jobs:
           cmd /c bootstrap
           b2 -d0 headers
 
+      - name: Generate headers
+        run: |
+          cd ../boost-root/libs/$LIBRARY
+          python3 gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o include/boost/qvm.hpp boost/qvm
+          python3 gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o include/boost/qvm_lite.hpp boost/qvm
+
       - name: Run tests
         shell: cmd
         run: |
           cd ../boost-root
-          b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release
+          b2 -j3 libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release,debug_qvm_hpp,release_qvm_hpp,debug_qvm_lite_hpp,release_qvm_lite_hpp
