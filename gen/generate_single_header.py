@@ -12,12 +12,7 @@
 
 		python3 generate_single_header.py  --help
 
-		e.g. python3 generate_single_header.py -i include/boost/qvm/all.hpp -p include -o include/boost/qvm.hpp boost/qvm
-
-	Note:
-
-		If unit tests are build by meson, you can enable the 'leaf_hpp' option (see meson_options.txt),
-		in which case each time the tests are built, first boost/qvm.hpp will be rebuilt.
+		e.g. python3 generate_single_header.py -i include/boost/qvm/all.hpp -p include -o test/qvm.hpp boost/qvm
 
 """
 

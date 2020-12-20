@@ -39,6 +39,32 @@ ifndef::backend-pdf[]
 <<tutorial>> | <<reference>> | <<rationale>>
 endif::[]
 
+[[support]]
+== Support
+
+* https://Cpplang.slack.com[cpplang on Slack] (use the `#boost` channel)
+* https://lists.boost.org/mailman/listinfo.cgi/boost-users[Boost Users Mailing List]
+* https://lists.boost.org/mailman/listinfo.cgi/boost[Boost Developers Mailing List]
+* https://github.com/boostorg/qvm/issues[Report an issue] on GitHub
+
+== Portability
+
+QVM requires only {CPP}03 but is tested on many compiler versions and {CPP} standards.
+
+== Distribution
+
+Copyright (C) 2008-2021 Emil Dotchevski. Distributed under the http://www.boost.org/LICENSE_1_0.txt[Boost Software License, Version 1.0].
+
+There are three distribution channels:
+
+* QVM is included in official https://www.boost.org/[Boost] releases.
+* The source code is hosted on https://github.com/boostorg/qvm[GitHub].
+* For maximum portability, the library is also available in single-header format, in two variants (direct download links):
+** link:qvm.hpp[qvm.hpp]: single header containing the complete QVM source, including the complete set of <<swizzling,swizzling>> overloads.
+** link:qvm_lite.hpp[qvm_lite.hpp]: single header containing everything except for the swizzling overloads.
+
+NOTE: QVM does not depend on Boost or other libraries.
+
 [[tutorial]]
 == Tutorial
 
@@ -5132,27 +5158,6 @@ QVM does not call standard math functions (e.g. sin, cos, etc.) directly. Instea
 QVM itself defines specializations of the math function templates only for `float` and `double`, but it does not provide generic definitions. This is done to protect the user from unintentionally writing code that binds standard math functions that take `double` when passing arguments of lesser types, which would be suboptimal.
 
 Because of this, a call to e.g. `<<rot_mat,rot_mat>>(axis,1)` will compile successfully but fail to link, since it calls e.g. `boost::qvm::sin<int>`, which is undefined. Because rotations by integer number of radians are rarely needed, in QVM there is no protection against such errors. In such cases the solution is to use `rot_mat(axis,1.0f)` instead.
-
-== Distribution
-
-(C) 2008-2021 Emil Dotchevski and Reverge Studios, Inc.
-
-QVM is part of https://www.boost.org/[Boost] and is distributed under the http://www.boost.org/LICENSE_1_0.txt[Boost Software License, Version 1.0].
-
-The source code is available in the https://github.com/boostorg/qvm[QVM GitHub repository].
-
-In addition, Boost QVM is available in single-header format for maximum portability. There are two versions of this distribution (the links below point to the actual header files for direct download):
-
-* link:qvm.hpp[qvm.hpp]: single header containing all QVM code, including complete swizzling overloads.
-* link:qvm_lite.hpp[qvm_lite.hpp]: single header containing everything except for the swizzling overloads.
-
-== Portability
-
-Boost QVM requires only {CPP}03 but is tested on many compiler versions and {CPP} standards.
-
-== Feedback / Support
-
-Please use the link:https://lists.boost.org/mailman/listinfo.cgi/boost[Boost Developers mailing list].
 
 == Q&A
 

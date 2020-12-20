@@ -1,6 +1,12 @@
-QVM: Generic C++ library for working with Quaternions, Vectors and Matrices
+# QVM
 
-Official documentation: https://boostorg.github.io/qvm/
+> A generic C++ library for working with `Q`uaternions, `V`ectors and `M`atrices.
+
+## Documentation
+
+https://boostorg.github.io/qvm/
+
+## Features
 
 * Emphasis on 2, 3 and 4-dimensional operations needed in graphics, video games and simulation applications.
 * Free function templates operate on any compatible user-defined Quaternion, Vector or Matrix type.
@@ -9,14 +15,19 @@ Official documentation: https://boostorg.github.io/qvm/
 * Requires only {CPP}03.
 * Zero dependencies.
 
-Please post questions and feedback on the Boost Developers Mailing List or in `#boost` in cpplang.slack.com.
+## Support
 
-> NOTE:
->
-> QVM is distributed as part of Boost (but it does not depend on any other Boost library).
->
-> In addition, QVM is available in single-header format for maximum portability. There are two versions of this distribution (the links below point to the actual header files for direct download):
-> * [qvm.hpp](https://boostorg.github.io/qvm/qvm.hpp): single header containing all QVM code, including complete swizzling overloads.
-> * [qvm_lite.hpp](https://boostorg.github.io/qvm/qvm_lite.hpp): single header containing everything except for the swizzling overloads.
+* [cpplang on Slack](https://Cpplang.slack.com) (use the `#boost` channel)
+* [Boost Users Mailing List](https://lists.boost.org/mailman/listinfo.cgi/boost-users)
+* [Boost Developers Mailing List](https://lists.boost.org/mailman/listinfo.cgi/boost)
 
-Copyright (c) 2018-2021 Emil Dotchevski. Distributed under the [Boost Software License, Version 1.0](http://www.boost.org/LICENSE_1_0.txt).
+## Distribution
+
+Besides GitHub, there are two other distribution channels:
+
+* QVM is included in official https://www.boost.org/[Boost] releases.
+* For maximum portability, the library is also available in single-header format, in two variants (direct download links):
+	* [qvm.hpp](https://boostorg.github.io/qvm/qvm.hpp): single header containing the complete QVM source, including the complete set of swizzling overloads.
+	* [qvm_lite.hpp](https://boostorg.github.io/qvm/qvm_lite.hpp): single header containing everything except for the swizzling overloads.
+
+Copyright (C) 2008-2021 Emil Dotchevski. Distributed under the [Boost Software License, Version 1.0](http://www.boost.org/LICENSE_1_0.txt).
