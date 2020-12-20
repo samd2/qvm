@@ -1,5 +1,5 @@
-#ifndef BOOST_QVM_ALL_LITE_HPP_INCLUDED
-#define BOOST_QVM_ALL_LITE_HPP_INCLUDED
+#ifndef BOOST_QVM_LITE_HPP_INCLUDED
+#define BOOST_QVM_LITE_HPP_INCLUDED
 
 /// Copyright (c) 2008-2021 Emil Dotchevski and Reverge Studios, Inc.
 
