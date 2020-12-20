@@ -38,7 +38,7 @@ def append(input_file_name, input_file, output_file, regex_includes, include_fol
 			next_input_file_name = result.group("include")
 			if next_input_file_name not in included:
 				included.append(next_input_file_name)
-				print("%s" % next_input_file_name, flush=True)
+				print("%s" % next_input_file_name)
 				with open(os.path.join(include_folder, next_input_file_name), "r") as next_input_file:
 					output_file.write('// >>> %s#line 1 "%s"\n' % (line, next_input_file_name))
 					append(next_input_file_name, next_input_file, output_file, regex_includes, include_folder)
