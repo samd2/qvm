@@ -5143,7 +5143,7 @@ The source code is available in the https://github.com/boostorg/qvm[QVM GitHub r
 
 In addition, Boost QVM is available in single-header format for maximum portability. There are two versions of this distribution (the links below point to the actual header files for direct download):
 
-* link:qvm.hpp[qvm.hpp]: single header containing all QVM code, including complete swizzling overloads (huge).
+* link:qvm.hpp[qvm.hpp]: single header containing all QVM code, including complete swizzling overloads.
 * link:qvm_lite.hpp[qvm_lite.hpp]: single header containing everything except for the swizzling overloads.
 
 == Portability
